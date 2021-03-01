@@ -7,6 +7,9 @@ import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import com.ajaweed.ajaweedcounter.databinding.ActivityCounterBinding
 
+/**
+ * Created by Salam El-Banna on 01/03/2021
+ */
 class CounterActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityCounterBinding
@@ -20,6 +23,7 @@ class CounterActivity : AppCompatActivity() {
 
         binding.increment.setOnClickListener {
             counterValue++
+            CounterRepository.setCounterValue(this, counterValue)
             updateCounterText()
         }
 
@@ -35,6 +39,7 @@ class CounterActivity : AppCompatActivity() {
             .setCancelable(false)
             .setPositiveButton(R.string.reset) { _, _ ->
                 counterValue = 0
+                CounterRepository.setCounterValue(this, counterValue)
                 updateCounterText()
             }
             .setNegativeButton(R.string.cancel) { dialog, _ ->
@@ -44,6 +49,7 @@ class CounterActivity : AppCompatActivity() {
 
     override fun onResume() {
         super.onResume()
+        counterValue = CounterRepository.getCounterValue(this)
         updateCounterText()
     }
 
