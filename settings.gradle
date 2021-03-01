@@ -1,0 +1,2 @@
+rootProject.name = "Ajaweed Counter"
+include ':app'
