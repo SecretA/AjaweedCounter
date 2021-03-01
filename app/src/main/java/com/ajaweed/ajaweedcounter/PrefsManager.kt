@@ -1,11 +1,9 @@
 package com.ajaweed.ajaweedcounter
 
-import androidx.lifecycle.ViewModel
-
 /**
  * Created by Salam El-Banna on 01/03/2021
  */
-class CounterViewModel : ViewModel() {
+class PrefsManager {
 
     private var counterValue = 0
 

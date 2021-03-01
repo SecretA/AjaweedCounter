@@ -3,6 +3,7 @@ package com.ajaweed.ajaweedcounter
 import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.View
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import com.ajaweed.ajaweedcounter.databinding.ActivityCounterBinding
 
@@ -17,18 +18,34 @@ class CounterActivity : AppCompatActivity() {
         setContentView(binding.root)
         setupFullScreenMode()
 
-        updateCounterText()
         binding.increment.setOnClickListener {
             counterValue++
             updateCounterText()
         }
 
         binding.reset.setOnClickListener {
-            counterValue = 0
-            updateCounterText()
+            showConfirmationDialog()
         }
     }
 
+    private fun showConfirmationDialog() {
+        AlertDialog.Builder(this)
+            .setTitle(R.string.reset_counter)
+            .setMessage(R.string.are_you_sure)
+            .setCancelable(false)
+            .setPositiveButton(R.string.reset) { _, _ ->
+                counterValue = 0
+                updateCounterText()
+            }
+            .setNegativeButton(R.string.cancel) { dialog, _ ->
+                dialog.dismiss()
+            }.create().show()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        updateCounterText()
+    }
 
     private fun updateCounterText() {
         binding.counterDisplay.text = counterValue.toString()
