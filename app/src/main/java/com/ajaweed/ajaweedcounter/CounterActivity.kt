@@ -1,6 +1,7 @@
 package com.ajaweed.ajaweedcounter
 
 import android.annotation.SuppressLint
+import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AlertDialog
@@ -29,6 +30,10 @@ class CounterActivity : AppCompatActivity() {
 
         binding.reset.setOnClickListener {
             showConfirmationDialog()
+        }
+
+        binding.settings.setOnClickListener {
+            startActivity(Intent(this, SettingsActivity::class.java))
         }
     }
 
