@@ -1,6 +1,7 @@
 package com.ajaweed.ajaweedcounter
 
 import android.annotation.SuppressLint
+import android.app.AlertDialog
 import android.os.Bundle
 import android.view.View
 import android.view.animation.ScaleAnimation
@@ -35,20 +36,20 @@ class CounterActivity : AppCompatActivity() {
     }
 
     private fun showConfirmationDialog() {
-//        AlertDialog.Builder(this)
-//            .setTitle(R.string.reset_counter)
-//            .setMessage(R.string.are_you_sure)
-//            .setCancelable(false)
-//            .setPositiveButton(R.string.reset) { _, _ ->
-//                setupFullScreenMode()
-//                counterValue = 0
-//                CounterRepository.setCounterValue(this, counterValue)
-//                updateCounterText()
-//            }
-//            .setNegativeButton(R.string.cancel) { dialog, _ ->
-//                setupFullScreenMode()
-//                dialog.dismiss()
-//            }.create().show()
+        AlertDialog.Builder(this)
+            .setTitle(R.string.reset_counter)
+            .setMessage(R.string.are_you_sure)
+            .setCancelable(false)
+            .setPositiveButton(R.string.reset) { _, _ ->
+                setupFullScreenMode()
+                counterValue = 0
+                CounterRepository.setCounterValue(this, counterValue)
+                updateCounterText()
+            }
+            .setNegativeButton(R.string.cancel) { dialog, _ ->
+                setupFullScreenMode()
+                dialog.dismiss()
+            }.create().show()
     }
 
     override fun onResume() {
@@ -81,8 +82,7 @@ class CounterActivity : AppCompatActivity() {
     private fun animate() {
         val animationScale = 0.98.toFloat()
         val scale = ScaleAnimation(animationScale, animationScale, animationScale, animationScale)
-        scale.fillAfter = false
-        scale.duration = 100
+        scale.duration = 50
         binding.increment.startAnimation(scale)
     }
 }
