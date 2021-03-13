@@ -1,12 +1,12 @@
 package com.ajaweed.ajaweedcounter
 
 import android.annotation.SuppressLint
-import android.content.Intent
 import android.os.Bundle
 import android.view.View
-import androidx.appcompat.app.AlertDialog
+import android.view.animation.ScaleAnimation
 import androidx.appcompat.app.AppCompatActivity
 import com.ajaweed.ajaweedcounter.databinding.ActivityCounterBinding
+
 
 /**
  * Created by Salam El-Banna on 01/03/2021
@@ -23,6 +23,7 @@ class CounterActivity : AppCompatActivity() {
         setupFullScreenMode()
 
         binding.increment.setOnClickListener {
+            animate()
             counterValue++
             CounterRepository.setCounterValue(this, counterValue)
             updateCounterText()
@@ -31,25 +32,23 @@ class CounterActivity : AppCompatActivity() {
         binding.reset.setOnClickListener {
             showConfirmationDialog()
         }
-
-        binding.settings.setOnClickListener {
-            startActivity(Intent(this, SettingsActivity::class.java))
-        }
     }
 
     private fun showConfirmationDialog() {
-        AlertDialog.Builder(this)
-            .setTitle(R.string.reset_counter)
-            .setMessage(R.string.are_you_sure)
-            .setCancelable(false)
-            .setPositiveButton(R.string.reset) { _, _ ->
-                counterValue = 0
-                CounterRepository.setCounterValue(this, counterValue)
-                updateCounterText()
-            }
-            .setNegativeButton(R.string.cancel) { dialog, _ ->
-                dialog.dismiss()
-            }.create().show()
+//        AlertDialog.Builder(this)
+//            .setTitle(R.string.reset_counter)
+//            .setMessage(R.string.are_you_sure)
+//            .setCancelable(false)
+//            .setPositiveButton(R.string.reset) { _, _ ->
+//                setupFullScreenMode()
+//                counterValue = 0
+//                CounterRepository.setCounterValue(this, counterValue)
+//                updateCounterText()
+//            }
+//            .setNegativeButton(R.string.cancel) { dialog, _ ->
+//                setupFullScreenMode()
+//                dialog.dismiss()
+//            }.create().show()
     }
 
     override fun onResume() {
@@ -77,5 +76,13 @@ class CounterActivity : AppCompatActivity() {
                     View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY or
                     View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION or
                     View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
+    }
+
+    private fun animate() {
+        val animationScale = 0.98.toFloat()
+        val scale = ScaleAnimation(animationScale, animationScale, animationScale, animationScale)
+        scale.fillAfter = false
+        scale.duration = 100
+        binding.increment.startAnimation(scale)
     }
 }
