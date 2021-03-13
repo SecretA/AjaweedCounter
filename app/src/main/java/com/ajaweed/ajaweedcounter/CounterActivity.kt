@@ -56,6 +56,7 @@ class CounterActivity : AppCompatActivity() {
         super.onResume()
         counterValue = CounterRepository.getCounterValue(this)
         updateCounterText()
+        setupFullScreenMode()
     }
 
     private fun updateCounterText() {
