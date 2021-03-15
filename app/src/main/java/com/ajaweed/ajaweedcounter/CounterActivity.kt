@@ -3,6 +3,7 @@ package com.ajaweed.ajaweedcounter
 import android.annotation.SuppressLint
 import android.app.AlertDialog
 import android.os.Bundle
+import android.view.KeyEvent
 import android.view.View
 import android.view.animation.ScaleAnimation
 import androidx.appcompat.app.AppCompatActivity
@@ -24,15 +25,19 @@ class CounterActivity : AppCompatActivity() {
         setupFullScreenMode()
 
         binding.increment.setOnClickListener {
-            animate()
-            counterValue++
-            CounterRepository.setCounterValue(this, counterValue)
-            updateCounterText()
+            incrementCounter()
         }
 
         binding.reset.setOnClickListener {
             showConfirmationDialog()
         }
+    }
+
+    private fun incrementCounter() {
+        animateIncrementButton()
+        counterValue++
+        updateCounterText()
+        CounterRepository.setCounterValue(this, counterValue)
     }
 
     private fun showConfirmationDialog() {
@@ -43,8 +48,8 @@ class CounterActivity : AppCompatActivity() {
             .setPositiveButton(R.string.reset) { _, _ ->
                 setupFullScreenMode()
                 counterValue = 0
-                CounterRepository.setCounterValue(this, counterValue)
                 updateCounterText()
+                CounterRepository.setCounterValue(this, counterValue)
             }
             .setNegativeButton(R.string.cancel) { dialog, _ ->
                 setupFullScreenMode()
@@ -80,10 +85,18 @@ class CounterActivity : AppCompatActivity() {
                     View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
     }
 
-    private fun animate() {
+    private fun animateIncrementButton() {
         val animationScale = 0.98.toFloat()
         val scale = ScaleAnimation(animationScale, animationScale, animationScale, animationScale)
         scale.duration = 50
         binding.increment.startAnimation(scale)
+    }
+
+    override fun onKeyDown(keyCode: Int, event: KeyEvent?): Boolean {
+        when (keyCode) {
+            KeyEvent.KEYCODE_VOLUME_DOWN -> incrementCounter()
+            KeyEvent.KEYCODE_VOLUME_UP -> incrementCounter()
+        }
+        return super.onKeyDown(keyCode, event)
     }
 }
