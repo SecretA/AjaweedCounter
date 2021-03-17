@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Ajaweed Counter</string>
+    <string name="app_name">عداد التسبيح</string>
     <string name="are_you_sure">Are you sure you want to reset counter?</string>
     <string name="reset">Reset</string>
     <string name="cancel">Cancel</string>
