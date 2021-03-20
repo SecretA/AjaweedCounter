@@ -94,8 +94,10 @@ class CounterActivity : AppCompatActivity() {
 
     override fun onKeyDown(keyCode: Int, event: KeyEvent?): Boolean {
         when (keyCode) {
-            KeyEvent.KEYCODE_VOLUME_DOWN -> incrementCounter()
-            KeyEvent.KEYCODE_VOLUME_UP -> incrementCounter()
+            KeyEvent.KEYCODE_VOLUME_UP, KeyEvent.KEYCODE_VOLUME_DOWN -> {
+                incrementCounter()
+                return true
+            }
         }
         return super.onKeyDown(keyCode, event)
     }
